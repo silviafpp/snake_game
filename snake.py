@@ -1,28 +1,28 @@
 import pygame
 
 # Tamanho de cada bloco
-TILE_SIZE = 20 
+TILE_SIZE = 40
 
 class Snake:
     # Construtor
     def __init__(self):
-        self.body = [(5,5), (4,5), (3,5)]
-        self.direction = (1,0)
+        self.body = [(5, 5), (4, 5), (3, 5)]
+        self.direction = (1, 0)
         self.grow = False
         self.load_images()
         
     def load_images(self):
-        # Dicionário de imagens da cobra
+        # Dicionário de imagens da cobra (nomes padronizados em minúsculas)
         self.images = {
-            "HEAD_UP": pygame.transform.scale(pygame.image.load("assets/head_up.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "HEAD_DOWN": pygame.transform.scale(pygame.image.load("assets/head_down.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "HEAD_LEFT": pygame.transform.scale(pygame.image.load("assets/head_left.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "HEAD_RIGHT": pygame.transform.scale(pygame.image.load("assets/head_right.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "BODY": pygame.transform.scale(pygame.image.load("assets/body.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "TAIL_UP": pygame.transform.scale(pygame.image.load("assets/tail_up.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "TAIL_DOWN": pygame.transform.scale(pygame.image.load("assets/tail_down.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "TAIL_LEFT": pygame.transform.scale(pygame.image.load("assets/tail_left.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
-            "TAIL_RIGHT": pygame.transform.scale(pygame.image.load("assets/tail_right.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
+            "head_up": pygame.transform.scale(pygame.image.load("assets/head_up.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "head_down": pygame.transform.scale(pygame.image.load("assets/head_down.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "head_left": pygame.transform.scale(pygame.image.load("assets/head_left.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "head_right": pygame.transform.scale(pygame.image.load("assets/head_right.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "body": pygame.transform.scale(pygame.image.load("assets/body.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "tail_up": pygame.transform.scale(pygame.image.load("assets/tail_up.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "tail_down": pygame.transform.scale(pygame.image.load("assets/tail_down.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "tail_left": pygame.transform.scale(pygame.image.load("assets/tail_left.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)),
+            "tail_right": pygame.transform.scale(pygame.image.load("assets/tail_right.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))
         }
         
     def move(self):
@@ -45,32 +45,31 @@ class Snake:
     def get_head_image(self):
         # Retorna a imagem da cabeça conforme a direção atual
         if self.direction == (0, -1):
-            return self.images["HEAD_UP"]
+            return self.images["head_up"]
         elif self.direction == (0, 1):
-            return self.images["HEAD_DOWN"]
+            return self.images["head_down"]
         elif self.direction == (-1, 0):
-            return self.images["HEAD_LEFT"]
+            return self.images["head_left"]
         elif self.direction == (1, 0):
-            return self.images["HEAD_RIGHT"]
+            return self.images["head_right"]
     
     def get_tail_image(self):
-        # Calcula a diferença (dx, dy) entre o último e o penúltimo
-        # segmento para descobrir para onde a cauda deve estar virada
+        # Determina a orientação da cauda
         if len(self.body) < 2:
-            return self.images["TAIL_RIGHT"]
+            return self.images["tail_right"]
         tail = self.body[-1]
         before_tail = self.body[-2]
         dx = tail[0] - before_tail[0]
         dy = tail[1] - before_tail[1]
         if dx == 1:
-            return self.images["TAIL_LEFT"]
+            return self.images["tail_left"]
         elif dx == -1:
-            return self.images["TAIL_RIGHT"]
+            return self.images["tail_right"]
         elif dy == 1:
-            return self.images["TAIL_UP"]
+            return self.images["tail_up"]
         elif dy == -1:
-            return self.images["TAIL_DOWN"]
-        return self.images["TAIL_RIGHT"]
+            return self.images["tail_down"]
+        return self.images["tail_right"]
     
     def draw(self, screen):
         for i, (x, y) in enumerate(self.body):
@@ -84,7 +83,7 @@ class Snake:
             screen.blit(image, pos)
     
     def check_collision(self, width, height):
-        # Deteta se a cobra saiu dos limites do ecrã ou se bateu em si mesma
+        # Detecta colisões com paredes ou com o próprio corpo
         head = self.body[0]
         if not (0 <= head[0] < width // TILE_SIZE and 0 <= head[1] < height // TILE_SIZE):
             return True

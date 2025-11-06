@@ -1,7 +1,7 @@
 import pygame
 import random
 
-TILE_SIZE = 20
+TILE_SIZE = 40
 
 class Apple:
     # Construtor
@@ -13,13 +13,13 @@ class Apple:
         self.position = self.random_position()
         
     def random_position(self):
-        # Gera a posição aleatória da maçã
-        return(
+        # Gera uma posição aleatória para a maçã
+        return (
             random.randint(0, self.width // TILE_SIZE - 1),
             random.randint(0, self.height // TILE_SIZE - 1)
         )
             
     def draw(self, screen):
-        # Desenha a maçã
-        x, y = self.random_position
+        # Desenha a maçã na posição atual
+        x, y = self.position
         screen.blit(self.image, (x * TILE_SIZE, y * TILE_SIZE))
