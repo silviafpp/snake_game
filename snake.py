@@ -1,7 +1,7 @@
 import pygame
 
 # Tamanho de cada bloco
-TILE_SIZE = 40
+TILE_SIZE = 20
 
 class Snake:
     # Construtor

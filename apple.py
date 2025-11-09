@@ -1,7 +1,7 @@
 import pygame
 import random
 
-TILE_SIZE = 40
+TILE_SIZE = 20
 
 class Apple:
     # Construtor

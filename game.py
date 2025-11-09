@@ -3,10 +3,11 @@ import sys
 from snake import Snake
 from apple import Apple
 
-WIDTH, HEIGHT = 1920, 1000
-TILE_SIZE = 40
+WIDTH, HEIGHT = 800, 600
+TILE_SIZE = 20
 GREEN = (140, 215, 120)
 DARK_GREEN = (130, 205, 110)
+SCREEN_GREEN = (46, 111, 64)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -14,7 +15,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Cobrinha")
+        pygame.display.set_caption("Snake Game")
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("Arial", 25, True)
         self.big_font = pygame.font.SysFont("Arial", 40, True)
@@ -76,10 +77,10 @@ class Game:
 
     def menu_screen(self):
         while self.state == "menu":
-            self.screen.fill(GREEN)
-            title = self.big_font.render("Bem-vindo/a ao Snake Game!", True, BLACK)
-            play_text = self.font.render("Jogar (ENTER)", True, BLACK)
-            exit_text = self.font.render("Sair (ESC)", True, BLACK)
+            self.screen.fill(SCREEN_GREEN)
+            title = self.big_font.render("Bem-vindo/a ao Snake Game!", True, WHITE)
+            play_text = self.font.render("Jogar (ENTER)", True, WHITE)
+            exit_text = self.font.render("Sair (ESC)", True, WHITE)
 
             self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, HEIGHT // 3))
             self.screen.blit(play_text, (WIDTH // 2 - play_text.get_width() // 2, HEIGHT // 2))
@@ -102,7 +103,7 @@ class Game:
 
     def game_over_screen(self):
         while self.state == "game_over":
-            self.screen.fill(DARK_GREEN)
+            self.screen.fill(SCREEN_GREEN)
             over_text = self.big_font.render("Game Over!", True, WHITE)
             score_text = self.font.render(f"Maçãs comidas: {self.score}", True, WHITE)
             record_text = self.font.render(f"Recorde: {self.high_score}", True, WHITE)
